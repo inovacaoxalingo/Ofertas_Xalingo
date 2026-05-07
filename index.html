@@ -210,6 +210,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--navy);-web
 .cimg img{width:84%;height:84%;object-fit:contain;transition:transform .3s}
 .card:hover .cimg img{transform:scale(1.06)}
 .cph{font-size:2.5rem;opacity:.12}
+.cspin{width:32px;height:32px;border:3px solid rgba(27,58,92,.1);border-top-color:var(--navy);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
 .price-strip{
   display:flex;align-items:center;justify-content:space-between;
   padding:6px 12px;background:var(--ps-bg,#f3f3f3);
@@ -778,6 +780,87 @@ let activePreco = 'all';
 let activeView = 'grid';
 let currentModal = null;
 
+// ======== IMAGE LOADING (WP REST API + CORS proxies) ========
+const imgCache = {}; // slug -> url|null|'loading'
+const WP = 'https://produtosxalingo.oneweb.com.br';
+const PROXIES = [
+  u => u,
+  u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u)
+];
+
+function proxyFetch(apiUrl, timeout=10000){
+  let i = 0;
+  function next(){
+    if(i >= PROXIES.length) return Promise.reject(new Error('Todos os proxies falharam'));
+    const url = PROXIES[i++](apiUrl);
+    return fetch(url, {signal: AbortSignal.timeout(timeout)})
+      .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .catch(err=>{ console.warn('[IMG] proxy '+(i)+' falhou:', err.message); return next(); });
+  }
+  return next();
+}
+
+function fetchImg(slug){
+  if(imgCache[slug] !== undefined) return Promise.resolve(imgCache[slug]);
+  imgCache[slug] = 'loading';
+  const apiUrl = WP+'/wp-json/wp/v2/posts?slug='+encodeURIComponent(slug)+'&_fields=featured_media&_embed&per_page=1';
+  return proxyFetch(apiUrl, 12000)
+    .then(posts=>{
+      if(!posts || !posts.length || !posts[0]._embedded) throw new Error('sem post');
+      const media = posts[0]._embedded['wp:featuredmedia'];
+      if(!media || !media.length) throw new Error('sem imagem');
+      const src = (media[0].media_details && media[0].media_details.sizes &&
+                   media[0].media_details.sizes.medium && media[0].media_details.sizes.medium.source_url)
+                  || media[0].source_url;
+      imgCache[slug] = src || null;
+      return imgCache[slug];
+    })
+    .catch(()=>{ imgCache[slug]=null; return null; });
+}
+
+// Inject image into card after fetch
+function injectCardImg(slug, src){
+  document.querySelectorAll(`.card[data-slug="${slug}"] .cimg`).forEach(el=>{
+    if(!src){ el.querySelector('.cspin')?.remove(); return; }
+    el.innerHTML = `<img src="${src}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`;
+  });
+  // also update modal if open
+  if(currentModal && currentModal.slug === slug){
+    const mimg = document.getElementById('mimg');
+    if(src) mimg.innerHTML = `<img src="${src}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
+  }
+}
+
+function loadImgForSlug(slug){
+  if(!slug) return;
+  if(imgCache[slug] && imgCache[slug] !== 'loading'){ injectCardImg(slug, imgCache[slug]); return; }
+  if(imgCache[slug] === 'loading') return;
+  fetchImg(slug).then(src=>injectCardImg(slug, src));
+}
+
+// IntersectionObserver for lazy image loading
+let imgObserver = null;
+function setupImgObserver(){
+  if(imgObserver) imgObserver.disconnect();
+  imgObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const card = entry.target;
+      const slug = card.dataset.slug;
+      if(slug) loadImgForSlug(slug);
+      imgObserver.unobserve(card);
+    });
+  }, {rootMargin:'200px'});
+  document.querySelectorAll('.card[data-slug]').forEach(card=>{
+    if(imgCache[card.dataset.slug] && imgCache[card.dataset.slug]!=='loading'){
+      injectCardImg(card.dataset.slug, imgCache[card.dataset.slug]);
+    } else {
+      imgObserver.observe(card);
+    }
+  });
+}
+
 // ======== HELPERS ========
 const brl = v => 'R$ '+v.toFixed(2).replace('.',',');
 const disc = (de,para) => Math.round((1-para/de)*100);
@@ -831,7 +914,7 @@ function renderGrid(){
     return;
   }
 
-  grid.innerHTML = prods.map(p=>{
+  const gridHtml = prods.map(p=>{
     const inCart = !!cart[p.ref];
     const pct = disc(p.de,p.para);
     const color = catColor[p.cat]||'#555';
@@ -840,11 +923,16 @@ function renderGrid(){
     const estClass = p.est<=200?'est-low':'est-ok';
     const estTxt = p.est<=200?`⚠️ ${p.est} un`:`✅ ${p.est} un`;
 
+    const cachedImg = imgCache[p.slug];
+    const imgHtml = (cachedImg && cachedImg!=='loading')
+      ? `<img src="${cachedImg}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`
+      : `<div class="cspin"></div>`;
+
     if(!isList) return `
     <div class="card ${inCart?'in-cart':''}" style="--cc:${color}"
-         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}" data-slug="${p.slug}">
       <div class="cimg" style="--cimg-bg:${bg}">
-        <span class="cph">${icon}</span>
+        ${imgHtml}
       </div>
       <div class="price-strip" style="--ps-bg:${bg}55">
         <span class="de">De: ${brl(p.de)}</span>
@@ -864,11 +952,16 @@ function renderGrid(){
       </div>
     </div>`;
 
+    const cachedImgL = imgCache[p.slug];
+    const imgHtmlL = (cachedImgL && cachedImgL!=='loading')
+      ? `<img src="${cachedImgL}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:9px">`
+      : `<div class="cspin"></div>`;
+
     return `
     <div class="card ${inCart?'in-cart':''}" style="--cc:${color};flex-direction:row;align-items:center"
-         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}" data-slug="${p.slug}">
       <div class="cimg" style="--cimg-bg:${bg};width:72px;height:72px;aspect-ratio:unset;flex-shrink:0;margin:6px;border-radius:9px">
-        <span class="cph">${icon}</span>
+        ${imgHtmlL}
       </div>
       <div class="cbody" style="padding:8px 10px;flex:1">
         <div class="cref">Ref. ${p.ref}</div>
@@ -887,9 +980,9 @@ function renderGrid(){
       </button>
     </div>`;
   }).join('');
+  grid.innerHTML = gridHtml;
+  setupImgObserver();
 }
-
-// ======== MODAL ========
 function openModal(ref){
   const p = PRODUCTS.find(x=>x.ref===ref);
   if(!p) return;
@@ -901,7 +994,14 @@ function openModal(ref){
   const bg = catBg[p.cat]||'#f5f5f5';
   const icon = catIcon[p.cat]||'🧸';
 
-  document.getElementById('mimg').innerHTML = `<span class="cph" style="font-size:5rem;opacity:.18">${icon}</span>`;
+  // Image in modal
+  const cachedM = imgCache[p.slug];
+  if(cachedM && cachedM!=='loading'){
+    document.getElementById('mimg').innerHTML = `<img src="${cachedM}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
+  } else {
+    document.getElementById('mimg').innerHTML = `<div class="cspin"></div>`;
+    if(!cachedM) fetchImg(p.slug).then(src=>injectCardImg(p.slug, src));
+  }
   document.getElementById('mref').textContent = `Ref. ${p.ref}`;
   document.getElementById('mname').textContent = p.nome;
   document.getElementById('m-de').textContent = `De: ${brl(p.de)}`;
