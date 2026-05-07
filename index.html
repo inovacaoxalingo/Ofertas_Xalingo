@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campanha Especial Maio 2026 — Xalingo Brinquedos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B3A5C;--navy2:#0d2240;--gold:#f0a030;--gold2:#e08820;
+  --red:#A01E1E;--green:#2e7d32;--orange:#e65100;
+  --bg:#f0ece6;--surf:#fff;--bdr:rgba(27,58,92,.1);
+  --r:14px;
+  --c-blocos:#4a6fa5;--c-jogos:#c0392b;--c-faz:#16a085;--c-educ:#8e44ad;--c-outros:#7f8c8d;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--navy);-webkit-font-smoothing:antialiased}
+
+/* ======== COVER ======== */
+.cover{
+  min-height:100vh;background:linear-gradient(135deg,var(--navy2) 0%,var(--navy) 60%,#1e4a72 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;padding:40px 20px;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 50%,rgba(240,160,48,.15) 0%,transparent 55%),
+             radial-gradient(circle at 80% 20%,rgba(255,255,255,.04) 0%,transparent 40%);
+}
+.cover-dots{
+  position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.cover-inner{position:relative;z-index:2;max-width:680px;width:100%;text-align:center}
+.cover-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,160,48,.18);border:1.5px solid rgba(240,160,48,.4);
+  border-radius:100px;padding:7px 18px;margin-bottom:28px;
+  font-size:.72rem;font-weight:800;color:var(--gold);letter-spacing:.8px;text-transform:uppercase;
+}
+.cover-logo{
+  font-family:'Fredoka',sans-serif;font-size:3rem;font-weight:700;color:#fff;
+  line-height:1;margin-bottom:6px;
+}
+.cover-logo span{color:var(--gold)}
+.cover-tagline{font-size:.9rem;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:40px;letter-spacing:.5px}
+.cover-title{
+  font-family:'Fredoka',sans-serif;font-size:2.4rem;font-weight:700;color:#fff;
+  line-height:1.2;margin-bottom:8px;
+}
+.cover-subtitle{font-size:1rem;color:rgba(255,255,255,.6);font-weight:600;margin-bottom:48px}
+
+.rules-box{
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:32px;text-align:left;backdrop-filter:blur(8px);
+  margin-bottom:36px;
+}
+.rules-section{margin-bottom:24px}
+.rules-section:last-child{margin-bottom:0}
+.rules-heading{
+  display:flex;align-items:center;gap:10px;
+  font-size:.65rem;font-weight:800;color:var(--gold);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;
+  border-bottom:1px solid rgba(240,160,48,.25);
+}
+.rules-heading svg{width:14px;height:14px;fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px;
+}
+.pay-value{
+  font-family:'Fredoka',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;
+  margin-bottom:6px;
+}
+.pay-label{font-size:.62rem;color:rgba(255,255,255,.45);font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px}
+.pay-months{display:flex;gap:5px;flex-wrap:wrap}
+.pay-month{
+  background:rgba(240,160,48,.2);border:1px solid rgba(240,160,48,.35);
+  border-radius:6px;padding:3px 8px;font-size:.65rem;font-weight:800;color:var(--gold);
+}
+
+.rules-list{display:flex;flex-direction:column;gap:10px}
+.rule-item{display:flex;align-items:flex-start;gap:12px}
+.rule-dot{
+  width:20px;height:20px;background:rgba(240,160,48,.2);border:1.5px solid rgba(240,160,48,.4);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.rule-dot::after{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%}
+.rule-text{font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);line-height:1.5}
+.rule-text strong{color:#fff;font-weight:800}
+
+.cover-note{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 20px;margin-bottom:36px;
+  font-size:.78rem;font-weight:600;color:rgba(255,255,255,.55);text-align:center;line-height:1.6;
+}
+
+.cover-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:#fff;font-family:'Fredoka',sans-serif;font-size:1.1rem;
+  font-weight:700;padding:16px 40px;border-radius:100px;border:none;cursor:pointer;
+  box-shadow:0 8px 32px rgba(240,160,48,.4);transition:all .2s;text-decoration:none;
+}
+.cover-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(240,160,48,.5)}
+.cover-btn svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+.cover-stats{
+  display:flex;gap:24px;justify-content:center;margin-top:40px;flex-wrap:wrap;
+}
+.cv-stat{text-align:center}
+.cv-num{font-family:'Fredoka',sans-serif;font-size:2rem;font-weight:700;color:var(--gold)}
+.cv-lbl{font-size:.62rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+
+/* ======== MAIN CATALOG ======== */
+.catalog{display:none}
+.catalog.show{display:block}
+
+.hdr{
+  background:var(--navy);padding:16px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.2);
+}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.back-btn{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.1);border:none;border-radius:9px;
+  padding:7px 12px;color:#fff;font-family:'Nunito',sans-serif;font-size:.72rem;
+  font-weight:700;cursor:pointer;transition:all .2s;
+}
+.back-btn:hover{background:rgba(255,255,255,.18)}
+.hdr-title{font-family:'Fredoka',sans-serif;font-size:1.2rem;font-weight:700;color:#fff}
+.hdr-title span{color:var(--gold)}
+.hdr-badge{
+  background:rgba(240,160,48,.2);border:1px solid rgba(240,160,48,.35);
+  border-radius:100px;padding:4px 12px;font-size:.62rem;font-weight:800;
+  color:var(--gold);letter-spacing:.5px;text-transform:uppercase;
+}
+.cart-toggle-btn{
+  display:flex;align-items:center;gap:8px;position:relative;
+  background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);
+  border-radius:10px;padding:9px 16px;color:#fff;font-family:'Nunito',sans-serif;
+  font-size:.78rem;font-weight:800;cursor:pointer;transition:all .2s;
+}
+.cart-toggle-btn:hover{background:rgba(255,255,255,.18)}
+.cart-badge{
+  background:var(--red);color:#fff;border-radius:50%;
+  width:18px;height:18px;font-size:.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.toolbar{
+  background:#fff;border-bottom:1px solid var(--bdr);padding:10px 32px;
+  display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.search-wrap{flex:1;min-width:160px;position:relative}
+.search-wrap input{
+  width:100%;padding:9px 12px 9px 36px;border:1.5px solid var(--bdr);
+  border-radius:10px;font-family:'Nunito',sans-serif;font-size:.82rem;
+  font-weight:700;color:var(--navy);background:#f8f7f5;transition:border .2s;
+}
+.search-wrap input:focus{outline:none;border-color:var(--navy)}
+.search-wrap input::placeholder{color:rgba(27,58,92,.3)}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.3;font-size:.8rem}
+.sel{
+  padding:9px 10px;border:1.5px solid var(--bdr);border-radius:10px;
+  font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;
+  color:var(--navy);background:#f8f7f5;cursor:pointer;
+}
+.view-toggle{display:flex;gap:2px;background:#f8f7f5;border-radius:8px;padding:2px;border:1.5px solid var(--bdr)}
+.vb{width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;
+  font-size:.8rem;display:flex;align-items:center;justify-content:center;color:rgba(27,58,92,.4)}
+.vb.on{background:var(--navy);color:#fff}
+.cnt-label{font-size:.7rem;font-weight:700;color:rgba(27,58,92,.4);white-space:nowrap}
+
+.frow{
+  background:#fff;border-bottom:1px solid var(--bdr);padding:9px 32px;
+  display:flex;align-items:center;gap:7px;overflow-x:auto;
+}
+.frow::-webkit-scrollbar{display:none}
+.flbl{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:rgba(27,58,92,.4);white-space:nowrap;flex-shrink:0}
+.fbtn{
+  font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;
+  padding:6px 14px;border-radius:100px;border:2px solid var(--bdr);
+  background:#fff;color:rgba(27,58,92,.5);cursor:pointer;white-space:nowrap;transition:all .15s;
+}
+.fbtn.on{background:var(--fc,var(--navy));color:#fff !important;border-color:var(--fc,var(--navy))}
+.fsep{width:1px;height:18px;background:var(--bdr);flex-shrink:0}
+
+.wrap{padding:20px 32px 100px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.grid.lst{grid-template-columns:1fr;gap:5px}
+
+/* ======== CARDS ======== */
+.card{
+  background:#fff;border:1px solid var(--bdr);border-radius:var(--r);
+  overflow:hidden;cursor:pointer;transition:all .2s;
+  border-top:3px solid var(--cc,var(--bdr));
+  display:flex;flex-direction:column;
+}
+.card:hover{box-shadow:0 10px 36px rgba(0,0,0,.1);transform:translateY(-2px)}
+.card.in-cart{border-top-color:var(--green) !important;background:#f9fff9}
+.cimg{
+  width:100%;aspect-ratio:1;background:var(--cimg-bg,#f8f7f5);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.cimg img{width:84%;height:84%;object-fit:contain;transition:transform .3s}
+.card:hover .cimg img{transform:scale(1.06)}
+.cph{font-size:2.5rem;opacity:.12}
+.price-strip{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 12px;background:var(--ps-bg,#f3f3f3);
+}
+.de{font-size:.65rem;font-weight:700;color:#aaa;text-decoration:line-through}
+.para{
+  font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--red);letter-spacing:-.3px;
+}
+.disc-pill{
+  background:rgba(160,30,30,.12);color:var(--red);
+  border-radius:100px;padding:2px 7px;font-size:.6rem;font-weight:800;
+}
+.cbody{padding:10px 12px 12px;flex:1;display:flex;flex-direction:column}
+.cref{font-size:.55rem;font-weight:800;color:rgba(27,58,92,.35);letter-spacing:.6px;margin-bottom:3px}
+.cname{font-size:.75rem;font-weight:800;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2em;flex:1}
+.cmeta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:4px}
+.cx-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:#f0f4f8;border-radius:6px;padding:3px 7px;
+  font-size:.6rem;font-weight:800;color:var(--navy);
+}
+.est-badge{
+  font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:6px;
+}
+.est-ok{background:#e8f5e9;color:var(--green)}
+.est-low{background:#fff3e0;color:var(--orange)}
+.add-btn{
+  width:100%;margin-top:9px;padding:9px;border:none;border-radius:9px;
+  font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;cursor:pointer;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;
+  background:var(--navy);color:#fff;
+}
+.add-btn:hover{background:var(--navy2);transform:scale(.99)}
+.add-btn.added{background:var(--green)}
+
+/* list mode */
+.grid.lst .card{flex-direction:row;align-items:stretch}
+.grid.lst .cimg{width:80px;height:80px;aspect-ratio:unset;flex-shrink:0;margin:6px;border-radius:9px}
+.grid.lst .price-strip{display:none}
+.grid.lst .cbody{padding:8px 10px}
+.grid.lst .cname{-webkit-line-clamp:1;min-height:auto}
+.grid.lst .cmeta{margin-top:3px}
+.grid.lst .add-btn{display:none}
+.grid.lst .lst-price{display:flex;align-items:center;gap:6px;margin-top:4px}
+.lst-price{display:none}
+.lst-de{font-size:.65rem;color:#aaa;text-decoration:line-through;font-weight:700}
+.lst-para{font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--red);font-weight:700}
+.lst-add{
+  margin-left:auto;flex-shrink:0;
+  width:30px;height:30px;border:none;border-radius:8px;
+  background:var(--navy);color:#fff;cursor:pointer;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+  align-self:center;
+}
+.lst-add:hover{background:var(--navy2)}
+.lst-add.added{background:var(--green)}
+.grid.lst .cmeta{flex-wrap:wrap}
+
+/* empty */
+.no-results{text-align:center;padding:60px 20px;color:rgba(27,58,92,.3);font-size:.9rem;font-weight:700}
+
+/* ======== CART SIDEBAR ======== */
+.cart-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:140;
+}
+.cart-overlay.open{display:block}
+.cart-side{
+  position:fixed;right:-540px;top:0;bottom:0;width:500px;
+  background:#fff;box-shadow:-4px 0 30px rgba(0,0,0,.15);
+  z-index:150;display:flex;flex-direction:column;
+  transition:right .3s ease;border-left:1px solid var(--bdr);
+}
+@media(max-width:540px){.cart-side{width:100vw;right:-100vw}}
+.cart-side.open{right:0}
+.cs-hdr{
+  background:var(--navy);color:#fff;padding:16px 18px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.cs-title{font-family:'Fredoka',sans-serif;font-size:1.1rem;font-weight:700}
+.cs-sub{font-size:.68rem;opacity:.55;margin-top:2px}
+.cs-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer}
+.cs-close:hover{color:#fff}
+
+.cs-campaign-bar{
+  background:linear-gradient(90deg,#1e4a72,#1B3A5C);
+  padding:10px 14px;border-bottom:2px solid rgba(240,160,48,.3);flex-shrink:0;
+}
+.cs-camp-title{font-size:.62rem;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px}
+.cs-camp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cs-camp-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:8px 10px;
+}
+.cs-camp-val{font-size:.8rem;font-weight:800;color:#fff;margin-bottom:2px}
+.cs-camp-lbl{font-size:.58rem;color:rgba(255,255,255,.45);font-weight:700;text-transform:uppercase;margin-bottom:5px}
+.cs-camp-months{display:flex;gap:3px;flex-wrap:wrap}
+.cs-camp-month{background:rgba(240,160,48,.2);color:var(--gold);border-radius:4px;padding:2px 5px;font-size:.58rem;font-weight:800}
+.cs-camp-met{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:8px 10px;margin-top:6px;
+  font-size:.66rem;font-weight:700;color:rgba(255,255,255,.6);
+}
+.cs-camp-met .highlight{color:var(--gold)}
+.cs-camp-ok{color:#4caf50 !important}
+
+.cs-body{flex:1;overflow-y:auto;padding:10px}
+.cs-empty{text-align:center;padding:50px 16px;color:#aaa;font-size:.85rem;font-weight:700}
+.cs-empty-ico{font-size:2.5rem;margin-bottom:10px;opacity:.3}
+
+.cs-item{
+  border:1px solid var(--bdr);border-radius:11px;padding:10px 11px;
+  margin-bottom:7px;display:grid;grid-template-columns:52px 1fr auto;gap:9px;
+}
+.cs-item.camp{border-color:rgba(240,160,48,.4);background:#fffcf4}
+.cs-thumb{width:52px;height:52px;object-fit:contain;border-radius:7px;background:#f5f5f5;align-self:center}
+.cs-thumb-empty{width:52px;height:52px;border-radius:7px;background:#eee;align-self:center;display:flex;align-items:center;justify-content:center;font-size:1.3rem;opacity:.25}
+.cs-left{min-width:0}
+.cs-iref{font-size:.58rem;font-weight:800;color:#bbb}
+.cs-iname{font-size:.73rem;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-iprice{font-family:'Fredoka',sans-serif;font-size:.85rem;color:var(--red);font-weight:700;margin-top:2px}
+.cs-imeta{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap}
+.cs-ibadge{font-size:.58rem;font-weight:700;padding:1px 6px;border-radius:4px;background:#eee;color:#555}
+.cs-ibadge.camp{background:rgba(240,160,48,.15);color:#8a5a00;border:1px solid rgba(240,160,48,.3)}
+.cs-right{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
+.cs-qty{display:flex;align-items:center;gap:3px}
+.cs-qb{
+  width:24px;height:24px;border:1px solid var(--bdr);background:#f4f1ed;
+  border-radius:6px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-weight:700;color:var(--navy);transition:background .1s;
+}
+.cs-qb:hover{background:#e0dcd6}
+.cs-qi{
+  width:40px;height:24px;border:1px solid var(--bdr);border-radius:6px;
+  text-align:center;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;
+}
+.cs-qi:focus{outline:none;border-color:var(--navy)}
+.cs-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:.78rem;padding:2px;transition:color .15s}
+.cs-del:hover{color:var(--red)}
+
+.cs-footer{border-top:1px solid var(--bdr);padding:14px 16px;flex-shrink:0;background:#fafafa}
+.cs-totals{margin-bottom:12px}
+.cs-tot-row{display:flex;justify-content:space-between;padding:3px 0;font-size:.8rem}
+.cs-tot-row .lbl{color:#888;font-weight:600}
+.cs-tot-row .val{font-weight:800}
+.cs-tot-main{border-top:1px solid var(--bdr);margin-top:6px;padding-top:8px}
+.cs-tot-main .val{color:var(--red);font-size:1.05rem;font-family:'Fredoka',sans-serif}
+.cs-tot-main .lbl{font-weight:800;color:var(--navy)}
+.cs-sku-info{
+  background:#f0f4f8;border-radius:8px;padding:8px 10px;margin-bottom:10px;
+  font-size:.7rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px;
+}
+.cs-sku-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cs-sku-dot.ok{background:var(--green)}
+.cs-sku-dot.warn{background:var(--orange)}
+.cs-btns{display:flex;gap:7px}
+.cs-btn-clear{
+  flex:1;background:transparent;border:1px solid var(--bdr);border-radius:9px;
+  padding:10px;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;
+  cursor:pointer;color:var(--red);transition:all .15s;
+}
+.cs-btn-clear:hover{border-color:var(--red);background:rgba(160,30,30,.04)}
+.cs-btn-print{
+  flex:2;background:var(--navy);color:#fff;border:none;border-radius:9px;
+  padding:10px;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;
+  cursor:pointer;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.cs-btn-print:hover{opacity:.9}
+
+/* floating cart fab */
+.cart-fab{
+  position:fixed;bottom:22px;right:22px;z-index:100;
+  background:var(--navy);color:#fff;border:none;border-radius:100px;
+  padding:14px 22px;font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:600;
+  cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.25);
+  display:none;align-items:center;gap:10px;transition:all .2s;
+}
+.cart-fab.show{display:flex}
+.cart-fab:hover{background:var(--navy2);transform:translateY(-2px)}
+.cart-fab-badge{
+  background:var(--red);color:#fff;border-radius:50%;
+  width:22px;height:22px;font-size:.68rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* back to top */
+.bktop{
+  display:none;position:fixed;bottom:22px;left:22px;
+  width:40px;height:40px;border-radius:50%;background:var(--navy);
+  color:#fff;border:none;cursor:pointer;font-size:.9rem;
+  align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:40;
+}
+.bktop.show{display:flex}
+
+/* ======== MODAL ======== */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:18px}
+.ov.open{display:flex}
+.mbox{
+  background:#fff;border-radius:20px;max-width:720px;width:100%;
+  display:flex;flex-direction:column;max-height:90vh;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);animation:mani .2s ease;position:relative;overflow:hidden;
+}
+@keyframes mani{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.mtop{display:flex;flex-shrink:0;border-bottom:1px solid var(--bdr);max-height:320px}
+.mimg-wrap{
+  flex:0 0 44%;background:#f8f7f5;
+  display:flex;align-items:center;justify-content:center;padding:16px;min-height:260px;
+}
+.mimg-wrap img{max-width:90%;max-height:250px;object-fit:contain}
+.mimg-wrap .cph{font-size:4rem}
+.mside{flex:1;padding:18px 20px;overflow-y:auto}
+.mcls{
+  position:absolute;top:12px;right:12px;width:32px;height:32px;
+  border-radius:50%;border:none;background:rgba(255,255,255,.9);
+  cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--navy);z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.mcls:hover{background:#fff;transform:scale(1.05)}
+.mbody{padding:18px 22px 22px;overflow-y:auto}
+.mref{font-size:.6rem;font-weight:800;color:rgba(27,58,92,.35);letter-spacing:.7px}
+.mname{font-family:'Fredoka',sans-serif;font-size:1.3rem;font-weight:600;line-height:1.25;margin-top:6px}
+.m-prices{display:flex;align-items:center;gap:12px;margin-top:12px}
+.m-de{font-size:.85rem;font-weight:700;color:#ccc;text-decoration:line-through}
+.m-para{font-family:'Fredoka',sans-serif;font-size:1.8rem;font-weight:700;color:var(--red)}
+.m-disc{background:rgba(160,30,30,.1);color:var(--red);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:800}
+.m-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.m-info-box{background:#f8f7f5;border-radius:10px;padding:10px 12px}
+.m-info-lbl{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:rgba(27,58,92,.4);margin-bottom:3px}
+.m-info-val{font-size:.9rem;font-weight:800;color:var(--navy)}
+.m-add-btn{
+  width:100%;margin-top:16px;padding:13px;border:none;border-radius:11px;
+  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;
+  background:var(--navy);color:#fff;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.m-add-btn:hover{background:var(--navy2)}
+.m-add-btn.added{background:var(--green)}
+.m-link{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:.72rem;font-weight:700;color:var(--navy);opacity:.5;text-decoration:none;transition:opacity .15s}
+.m-link:hover{opacity:.8}
+
+.ficha-lbl{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);margin-bottom:10px;opacity:.5}
+.ficha-grid{display:flex;flex-direction:column;gap:7px}
+.fi{background:#f8f7f5;border-radius:8px;padding:9px 12px;border:1px solid var(--bdr)}
+.filbl{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:rgba(27,58,92,.4);margin-bottom:3px}
+.fival{font-size:.82rem;font-weight:800;color:var(--navy)}
+
+@media(max-width:700px){
+  .hdr,.toolbar,.frow,.wrap{padding-left:14px;padding-right:14px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .mbox{max-width:100%}
+  .mtop{flex-direction:column;max-height:none}
+  .mimg-wrap{flex:none;min-height:180px}
+  .payment-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .hdr,.toolbar,.frow,.cart-fab,.bktop,.cart-side,.cart-overlay{display:none!important}
+  .wrap{padding:0!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER PAGE ============ -->
+<div class="cover" id="cover">
+  <div class="cover-dots"></div>
+  <div class="cover-inner">
+    <div class="cover-badge">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Campanha Especial — Maio 2026
+    </div>
+    <div class="cover-logo">Xalingo <span>Brinquedos</span></div>
+    <div class="cover-tagline">Catálogo de Campanha Comercial · Mercado Nacional</div>
+    <div class="cover-title">Condições Especiais<br>para Itens Participantes</div>
+    <div class="cover-subtitle">50 produtos com desconto de até 48% · Prazos estendidos de pagamento</div>
+
+    <div class="rules-box">
+      <!-- Pagamento -->
+      <div class="rules-section">
+        <div class="rules-heading">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          📌 Condições de Pagamento
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card">
+            <div class="pay-label">Pedidos acima de</div>
+            <div class="pay-value">R$ 3.000</div>
+            <div class="pay-label">Prazo de pagamento</div>
+            <div class="pay-months">
+              <span class="pay-month">SET</span>
+              <span class="pay-month">OUT</span>
+              <span class="pay-month">NOV</span>
+            </div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-label">Pedidos acima de</div>
+            <div class="pay-value">R$ 4.000</div>
+            <div class="pay-label">Prazo de pagamento</div>
+            <div class="pay-months">
+              <span class="pay-month">OUT</span>
+              <span class="pay-month">NOV</span>
+              <span class="pay-month">DEZ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regras -->
+      <div class="rules-section">
+        <div class="rules-heading">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          📌 Regras da Campanha
+        </div>
+        <div class="rules-list">
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-text">Para obter os <strong>prazos estendidos</strong>, o pedido deve conter no mínimo <strong>3 SKUs participantes</strong> da campanha.</div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-text">O <strong>valor total do pedido</strong> pode ser composto também por <strong>itens fora da campanha</strong>.</div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-text"><strong>Campanha válida</strong> enquanto durarem os estoques.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-note">
+      🚀 Aproveitamos esta ação para <strong>acelerar giro</strong>, <strong>aumentar mix</strong> e <strong>fortalecer negociações</strong> junto aos clientes.
+    </div>
+
+    <button class="cover-btn" onclick="showCatalog()">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Acessar Catálogo de Produtos
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <div class="cover-stats">
+      <div class="cv-stat"><div class="cv-num">50</div><div class="cv-lbl">Produtos</div></div>
+      <div class="cv-stat"><div class="cv-num">40%</div><div class="cv-lbl">Desconto</div></div>
+      <div class="cv-stat"><div class="cv-num">3+</div><div class="cv-lbl">SKUs mínimos</div></div>
+      <div class="cv-stat"><div class="cv-num">R$3k+</div><div class="cv-lbl">Prazo especial</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CATALOG ============ -->
+<div class="catalog" id="catalog">
+
+  <div class="hdr">
+    <div class="hdr-left">
+      <button class="back-btn" onclick="showCover()">← Capa</button>
+      <div>
+        <div class="hdr-title">Xalingo <span>Brinquedos</span></div>
+      </div>
+      <div class="hdr-badge">🎯 Campanha Maio 2026</div>
+    </div>
+    <button class="cart-toggle-btn" onclick="toggleCart()">
+      🛒 Pedido
+      <div class="cart-badge" id="hdr-badge">0</div>
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="si">🔍</span>
+      <input type="text" id="q" placeholder="Buscar produto ou referência...">
+    </div>
+    <select class="sel" id="sort">
+      <option value="cat">Por Categoria</option>
+      <option value="az">Nome A–Z</option>
+      <option value="za">Nome Z–A</option>
+      <option value="preco_a">Preço ↑</option>
+      <option value="preco_d">Preço ↓</option>
+      <option value="desc">Maior Desconto</option>
+    </select>
+    <div class="view-toggle">
+      <button class="vb on" id="vg" title="Grade">▦</button>
+      <button class="vb" id="vl" title="Lista">☰</button>
+    </div>
+    <span class="cnt-label" id="cnt"></span>
+  </div>
+
+  <div class="frow" id="frow">
+    <span class="flbl">Categoria</span>
+    <button class="fbtn on" data-cat="all">Todos</button>
+    <button class="fbtn" data-cat="BLOCOS" style="--fc:#4a6fa5">Blocos de Montar</button>
+    <button class="fbtn" data-cat="JOGOS" style="--fc:#c0392b">Jogos</button>
+    <button class="fbtn" data-cat="FAZ DE CONTA" style="--fc:#16a085">Faz de Conta</button>
+    <button class="fbtn" data-cat="EDUCATIVOS" style="--fc:#8e44ad">Educativos</button>
+    <div class="fsep"></div>
+    <span class="flbl">Preço</span>
+    <button class="fbtn" data-preco="ate100" style="--fc:#555">Até R$100</button>
+    <button class="fbtn" data-preco="100_200" style="--fc:#555">R$100–200</button>
+    <button class="fbtn" data-preco="200+" style="--fc:#555">Acima R$200</button>
+  </div>
+
+  <div class="wrap"><div class="grid" id="grid"></div></div>
+
+  <!-- Modal -->
+  <div class="ov" id="ov">
+    <div class="mbox">
+      <button class="mcls" id="mcls">✕</button>
+      <div class="mtop">
+        <div class="mimg-wrap" id="mimg"><div class="cph">🧸</div></div>
+        <div class="mside">
+          <div class="ficha-lbl">📋 Informações do Produto</div>
+          <div class="ficha-grid" id="ficha-grid"></div>
+        </div>
+      </div>
+      <div class="mbody">
+        <div class="mref" id="mref"></div>
+        <div class="mname" id="mname"></div>
+        <div class="m-prices">
+          <span class="m-de" id="m-de"></span>
+          <span class="m-para" id="m-para"></span>
+          <span class="m-disc" id="m-disc"></span>
+        </div>
+        <div class="m-info-grid">
+          <div class="m-info-box"><div class="m-info-lbl">Caixa Fechada</div><div class="m-info-val" id="m-cx"></div></div>
+          <div class="m-info-box"><div class="m-info-lbl">Valor Cx. Fechada</div><div class="m-info-val" id="m-vcx"></div></div>
+          <div class="m-info-box"><div class="m-info-lbl">Estoque</div><div class="m-info-val" id="m-est"></div></div>
+          <div class="m-info-box"><div class="m-info-lbl">Desconto</div><div class="m-info-val" style="color:var(--red)" id="m-pct"></div></div>
+        </div>
+        <button class="m-add-btn" id="m-add-btn" onclick="addFromModal()">
+          ➕ Adicionar ao Pedido
+        </button>
+        <a class="m-link" id="m-link" href="#" target="_blank" rel="noopener">🔗 Ver produto no site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cart-ov" onclick="toggleCart()"></div>
+  <div class="cart-side" id="cart-side">
+    <div class="cs-hdr">
+      <div>
+        <div class="cs-title">🛒 Meu Pedido</div>
+        <div class="cs-sub">Campanha Especial Maio 2026</div>
+      </div>
+      <button class="cs-close" onclick="toggleCart()">✕</button>
+    </div>
+
+    <div class="cs-campaign-bar">
+      <div class="cs-camp-title">📌 Condições de pagamento disponíveis</div>
+      <div class="cs-camp-grid">
+        <div class="cs-camp-card">
+          <div class="cs-camp-lbl">Acima de R$3.000</div>
+          <div class="cs-camp-months">
+            <span class="cs-camp-month">SET</span>
+            <span class="cs-camp-month">OUT</span>
+            <span class="cs-camp-month">NOV</span>
+          </div>
+        </div>
+        <div class="cs-camp-card">
+          <div class="cs-camp-lbl">Acima de R$4.000</div>
+          <div class="cs-camp-months">
+            <span class="cs-camp-month">OUT</span>
+            <span class="cs-camp-month">NOV</span>
+            <span class="cs-camp-month">DEZ</span>
+          </div>
+        </div>
+      </div>
+      <div class="cs-camp-met" id="cs-camp-met">⏳ Adicione ao menos <span class="highlight">3 SKUs</span> e <span class="highlight">R$3.000</span> para ativar o prazo especial.</div>
+    </div>
+
+    <div class="cs-body" id="cs-body">
+      <div class="cs-empty">
+        <div class="cs-empty-ico">🛒</div>
+        Nenhum produto adicionado ainda.<br>Clique em "Adicionar ao Pedido" nos produtos.
+      </div>
+    </div>
+
+    <div class="cs-footer">
+      <div class="cs-sku-info" id="cs-sku-info">
+        <div class="cs-sku-dot warn" id="sku-dot"></div>
+        <span id="sku-msg">0 SKUs adicionados · mínimo 3 para prazo especial</span>
+      </div>
+      <div class="cs-totals">
+        <div class="cs-tot-row"><span class="lbl">Itens</span><span class="val" id="tot-itens">0</span></div>
+        <div class="cs-tot-row"><span class="lbl">Qtd. Total</span><span class="val" id="tot-qty">0</span></div>
+        <div class="cs-tot-row cs-tot-main">
+          <span class="lbl">Total do Pedido</span>
+          <span class="val" id="tot-val">R$ 0,00</span>
+        </div>
+      </div>
+      <div class="cs-btns">
+        <button class="cs-btn-clear" onclick="clearCart()">🗑 Limpar</button>
+        <button class="cs-btn-print" onclick="printCart()">🖨 Imprimir Pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <button class="cart-fab" id="cart-fab" onclick="toggleCart()">
+    🛒 Pedido
+    <div class="cart-fab-badge" id="fab-badge">0</div>
+  </button>
+
+  <button class="bktop" id="bktop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+</div>
+
+<script>
+// ======== PRODUCTS DATA ========
+const PRODUCTS = [
+  {ref:"13487",nome:"BRINCANDO DE ENGENHEIRO HALLOWEEN - 60 PÇS",cat:"BLOCOS",de:48.0,para:24.9,cx:6,est:833,link:"https://produtosxalingo.oneweb.com.br/2025/01/27/brincando-de-engenheiro-halloween/",img:"",slug:"brincando-de-engenheiro-halloween"},
+  {ref:"13476",nome:"BRINCANDO DE ENGENHEIRO NATAL - 60 PÇS",cat:"BLOCOS",de:56.0,para:29.9,cx:6,est:682,link:"https://produtosxalingo.oneweb.com.br/2025/02/13/brincando-de-engenheiro-natal/",img:"",slug:"brincando-de-engenheiro-natal"},
+  {ref:"17676",nome:"PAINEL DE ATIVIDADES II",cat:"EDUCATIVOS",de:54.2,para:32.9,cx:4,est:523,link:"https://produtosxalingo.oneweb.com.br/2023/06/26/painel-de-atividades-2/",img:"",slug:"painel-de-atividades-2"},
+  {ref:"68465",nome:"SOFT BLOCOS BIG - 33 PÇS",cat:"BLOCOS",de:55.6,para:36.9,cx:2,est:698,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/soft-blocos-big/",img:"",slug:"soft-blocos-big"},
+  {ref:"13287",nome:"BRINCANDO DE ENGENHEIRO LIVRO CENÁRIO MAGNÉTICO - 46 PÇS",cat:"BLOCOS",de:62.6,para:37.9,cx:6,est:2261,link:"https://produtosxalingo.oneweb.com.br/2025/01/27/brincando-de-engenheiro-cenario-magnetico/",img:"",slug:"brincando-de-engenheiro-cenario-magnetico"},
+  {ref:"15965",nome:"BL CRIATIVOS - HALLOWEEN - 225 PÇS",cat:"BLOCOS",de:78.8,para:39.9,cx:6,est:1310,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/blocos-criativos-halloween/",img:"",slug:"blocos-criativos-halloween"},
+  {ref:"15976",nome:"BL CRIATIVOS - NATAL - 218 PÇS",cat:"BLOCOS",de:72.2,para:39.9,cx:6,est:1025,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/blocos-criativos-natal/",img:"",slug:"blocos-criativos-natal"},
+  {ref:"16209",nome:"BL BOMBEIROS - CORPO DE BOMBEIROS - 250 PÇS",cat:"BLOCOS",de:72.2,para:42.9,cx:6,est:1389,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/bombeiros-corpo-de-bombeiro/",img:"",slug:"bombeiros-corpo-de-bombeiro"},
+  {ref:"60576",nome:"JOGO DE TABULEIRO PANGEIA",cat:"JOGOS",de:75.0,para:44.9,cx:6,est:945,link:"https://produtosxalingo.oneweb.com.br/2023/06/27/jogo-de-tabuleiro-pangeia/",img:"",slug:"jogo-de-tabuleiro-pangeia"},
+  {ref:"12332",nome:"PÉ DE EQUILÍBRIO",cat:"EDUCATIVOS",de:74.3,para:47.9,cx:6,est:1173,link:"https://produtosxalingo.oneweb.com.br/2025/01/28/pe-de-equilibrio/",img:"",slug:"pe-de-equilibrio"},
+  {ref:"12810",nome:"JOGO DE TABULEIRO PISANDO FUNDO",cat:"JOGOS",de:81.0,para:48.9,cx:6,est:169,link:"https://produtosxalingo.oneweb.com.br/2024/02/05/jogo-de-tabueliro-pisando-fundo/",img:"",slug:"jogo-de-tabuleiro-pisando-fundo"},
+  {ref:"12732",nome:"JOGO DE TABULEIRO CAMPOS DA FORTUNA",cat:"JOGOS",de:71.0,para:49.9,cx:6,est:670,link:"https://produtosxalingo.oneweb.com.br/2024/02/05/jogo-de-tabuleiro-campos-da-fortuna/",img:"",slug:"jogo-de-tabuleiro-campos-da-fortuna"},
+  {ref:"93945",nome:"MOCHILINHA DE PRAIA",cat:"FAZ DE CONTA",de:78.9,para:51.9,cx:6,est:262,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/mochilinha-de-praia/",img:"",slug:"mochilinha-de-praia"},
+  {ref:"11753",nome:"MINI CHURRASQUEIRA COM SOM",cat:"FAZ DE CONTA",de:81.9,para:52.9,cx:6,est:676,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/mini-churrasqueira-com-som-65-pecas/",img:"",slug:"mini-churrasqueira-com-som"},
+  {ref:"68476",nome:"SOFT BLOCOS BIG - 56 PÇS",cat:"BLOCOS",de:88.3,para:57.9,cx:4,est:1192,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/soft-blocos-big-2/",img:"",slug:"soft-blocos-big-2"},
+  {ref:"68276",nome:"BL GRANDES - TRENZINHO DE NÚMEROS - 50 PÇS",cat:"BLOCOS",de:97.5,para:59.9,cx:4,est:1613,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-trenzinho-em-numero/",img:"",slug:"bloco-grande-trenzinho-em-numero"},
+  {ref:"68454",nome:"SOFT BLOCOS - 86 PÇS",cat:"BLOCOS",de:91.1,para:59.9,cx:2,est:1238,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/soft-blocos-3/",img:"",slug:"soft-blocos-3"},
+  {ref:"11750",nome:"CAFETEIRA 3 EM 1 COM SOM",cat:"FAZ DE CONTA",de:95.7,para:59.9,cx:6,est:1195,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/cafeteira-3-em-1-com-som-48-pecas/",img:"",slug:"cafeteira-3-em-1-com-som"},
+  {ref:"12809",nome:"XADREZ BRINCANDO DE ENGENHEIRO",cat:"JOGOS",de:106.0,para:68.9,cx:6,est:747,link:"https://produtosxalingo.oneweb.com.br/2025/02/12/xadrez-brincando-de-engenheiro/",img:"",slug:"xadrez-brincando-de-engenheiro"},
+  {ref:"68387",nome:"BL GRANDES - DINOS PARK - 37 PÇS",cat:"BLOCOS",de:117.0,para:69.9,cx:4,est:1052,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-dinos-park/",img:"",slug:"bloco-grande-dinos-park"},
+  {ref:"63110",nome:"SUPER SOFT BLOCOS - 30 PÇS",cat:"BLOCOS",de:120.0,para:74.9,cx:3,est:1575,link:"https://produtosxalingo.oneweb.com.br/2024/10/08/super-soft-blocos-30-pecas/",img:"",slug:"super-soft-blocos-30"},
+  {ref:"16232",nome:"BL GRANDES - NATAL - 77 PÇS",cat:"BLOCOS",de:125.0,para:74.9,cx:4,est:1259,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/blocos-grandes-natal/",img:"",slug:"blocos-grandes-natal"},
+  {ref:"16221",nome:"BL MUNDO ENCANTADO - MONTANHA RUSSA - 479 PÇS",cat:"BLOCOS",de:128.0,para:76.9,cx:4,est:1040,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/mundo-encantado-montanha-russa/",img:"",slug:"mundo-encantado-montanha-russa"},
+  {ref:"12998",nome:"BRINCANDO DE ENGENHEIRO CARRO - 78 PÇS",cat:"BLOCOS",de:127.0,para:82.9,cx:4,est:592,link:"https://produtosxalingo.oneweb.com.br/2025/02/01/brincando-de-engenheiro-carro/",img:"",slug:"brincando-de-engenheiro-carro"},
+  {ref:"68321",nome:"BL GRANDES - POLÍCIA - 36 PÇS",cat:"BLOCOS",de:129.0,para:83.9,cx:4,est:729,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-policia-2/",img:"",slug:"bloco-grande-policia-2"},
+  {ref:"63109",nome:"SUPER SOFT BLOCOS - 22 PÇS",cat:"BLOCOS",de:135.0,para:84.9,cx:2,est:1875,link:"https://produtosxalingo.oneweb.com.br/2024/10/08/super-soft-blocos-22-pecas/",img:"",slug:"super-soft-blocos-22"},
+  {ref:"55025",nome:"MALETA DE FERRAMENTAS COM PARAFUSADEIRA",cat:"FAZ DE CONTA",de:141.0,para:84.9,cx:6,est:367,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/maleta-de-ferramentas-com-parafusadeira/",img:"",slug:"maleta-de-ferramentas"},
+  {ref:"6000",nome:"BRINCANDO DE VETERINÁRIO",cat:"FAZ DE CONTA",de:134.0,para:86.9,cx:6,est:1422,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/brincando-de-veterinario/",img:"",slug:"brincando-de-veterinario"},
+  {ref:"68309",nome:"BL GRANDES - BOMBEIROS - 35 PÇS",cat:"BLOCOS",de:134.0,para:86.9,cx:4,est:765,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-bombeiros-2/",img:"",slug:"bloco-grande-bombeiros-2"},
+  {ref:"62554",nome:"MESA DE ÁGUA AREIA PLAY",cat:"FAZ DE CONTA",de:156.0,para:92.9,cx:6,est:633,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/mesa-de-agua-e-areia-play/",img:"",slug:"mesa-de-agua-areia-play"},
+  {ref:"62110",nome:"ESTAÇÃO DE SUPERMERCADO COM LUZ E SOM",cat:"FAZ DE CONTA",de:155.0,para:94.9,cx:6,est:1609,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/supermercado-com-luz-e-som/",img:"",slug:"supermercado-com-luz-e-som"},
+  {ref:"68398",nome:"BL GRANDES - CIRCUITO PLAY - 53 PÇS",cat:"BLOCOS",de:158.0,para:94.9,cx:4,est:1377,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-circuito/",img:"",slug:"bloco-grande-circuito"},
+  {ref:"68287",nome:"BL GRANDES - DINO PARK - 40 PÇS",cat:"BLOCOS",de:155.0,para:94.9,cx:2,est:1331,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-mundo-dinos-2/",img:"",slug:"bloco-grande-dino-park-40"},
+  {ref:"15987",nome:"BL QUADRANTE X - MONTANHA RUSSA - 832 PÇS",cat:"BLOCOS",de:154.0,para:99.9,cx:2,est:1800,link:"https://produtosxalingo.oneweb.com.br/2025/02/17/quadrante-x-montanha-russa/",img:"",slug:"quadrante-x-montanha-russa"},
+  {ref:"28310",nome:"BL QUADRANTE X - FOGUETE ESPACIAL - 292 PÇS",cat:"BLOCOS",de:163.0,para:99.9,cx:4,est:1404,link:"https://produtosxalingo.oneweb.com.br/2023/01/20/blocos-de-montar-foguete-espacial-292-pecas/",img:"",slug:"foguete-espacial"},
+  {ref:"68421",nome:"BL GRANDES - MESA INTERATIVA - 58 PÇS",cat:"BLOCOS",de:172.0,para:109.9,cx:2,est:1646,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-mesa-interativa/",img:"",slug:"bloco-grande-mesa-interativa"},
+  {ref:"28321",nome:"BL QUADRANTE X - ÔNIBUS ESPACIAL - 342 PÇS",cat:"BLOCOS",de:185.0,para:109.9,cx:4,est:1493,link:"https://produtosxalingo.oneweb.com.br/2023/01/20/blocos-de-montar-onibus-espacial-340-pecas/",img:"",slug:"onibus-espacial"},
+  {ref:"68376",nome:"BL GRANDES - FLORESTA - 61 PÇS",cat:"BLOCOS",de:180.0,para:109.9,cx:2,est:1259,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-floresta/",img:"",slug:"bloco-grande-floresta"},
+  {ref:"63121",nome:"SUPER SOFT BLOCOS - 58 PÇS",cat:"BLOCOS",de:179.0,para:116.9,cx:2,est:795,link:"https://produtosxalingo.oneweb.com.br/2024/10/08/super-soft-blocos-58-pecas/",img:"",slug:"super-soft-blocos-58"},
+  {ref:"16365",nome:"BL CRIATIVOS - MAPA DO MUNDO - 684 PÇS",cat:"BLOCOS",de:236.0,para:144.9,cx:2,est:1344,link:"https://produtosxalingo.oneweb.com.br/2025/02/14/blocos-criativos-mapa-do-mundo/",img:"",slug:"blocos-criativos-mapa-do-mundo"},
+  {ref:"16376",nome:"BL PIRATAS - MONTANHA RUSSA - 671 PÇS",cat:"BLOCOS",de:242.0,para:144.9,cx:2,est:844,link:"https://produtosxalingo.oneweb.com.br/2025/02/17/piratas-montanha-russa/",img:"",slug:"piratas-montanha-russa"},
+  {ref:"95960",nome:"MESA DE ÁGUA ÁRVORE DIVERTIDA",cat:"FAZ DE CONTA",de:228.0,para:147.9,cx:6,est:475,link:"https://produtosxalingo.oneweb.com.br/2024/05/16/mesa-de-agua-arvore-divertida/",img:"",slug:"mesa-de-agua-arvore-divertida"},
+  {ref:"27998",nome:"BL FAZENDA - ULTRA COLHEITADEIRA - 567 PÇS",cat:"BLOCOS",de:251.0,para:149.9,cx:2,est:2265,link:"https://produtosxalingo.oneweb.com.br/2023/01/20/blocos-de-montar-fazenda-ultra-colheitadeira-540-pecas/",img:"",slug:"ultra-colheitadeira"},
+  {ref:"68365",nome:"BL GRANDES - BOX 2 EM 1 - 100 PÇS",cat:"BLOCOS",de:284.0,para:169.9,cx:2,est:411,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-box-2-em-1/",img:"",slug:"bloco-grande-box-2-em-1"},
+  {ref:"68354",nome:"BL GRANDES - CIRCUITO PLAY - 100 PÇS",cat:"BLOCOS",de:294.0,para:174.9,cx:2,est:985,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-circuito-play/",img:"",slug:"bloco-grande-circuito-play-100"},
+  {ref:"68332",nome:"BL GRANDES - CIDADE EM OBRAS - 90 PÇS",cat:"BLOCOS",de:302.0,para:179.9,cx:2,est:887,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-cidade-em-obras/",img:"",slug:"bloco-grande-cidade-em-obras"},
+  {ref:"68409",nome:"BL GRANDES - MUNDO DINOS - 100 PÇS",cat:"BLOCOS",de:310.0,para:184.9,cx:2,est:529,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-mundo-dinos/",img:"",slug:"bloco-grande-mundo-dinos-100"},
+  {ref:"68298",nome:"BL GRANDES - BOMBEIROS - 90 PÇS",cat:"BLOCOS",de:302.0,para:196.9,cx:2,est:542,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-bombeiros/",img:"",slug:"bloco-grande-bombeiros-90"},
+  {ref:"68310",nome:"BL GRANDES - POLÍCIA - 90 PÇS",cat:"BLOCOS",de:302.0,para:196.9,cx:2,est:544,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-policia/",img:"",slug:"bloco-grande-policia-90"},
+  {ref:"68410",nome:"BL GRANDES - MUNDO ENCANTADO - 126 PÇS",cat:"BLOCOS",de:340.0,para:199.9,cx:2,est:470,link:"https://produtosxalingo.oneweb.com.br/2024/01/17/bloco-grande-mundo-encantado/",img:"",slug:"bloco-grande-mundo-encantado"},
+];
+
+// ======== STATE ========
+let cart = {}; // ref -> {p, qty}
+let activeCat = 'all';
+let activePreco = 'all';
+let activeView = 'grid';
+let currentModal = null;
+
+// ======== HELPERS ========
+const brl = v => 'R$ '+v.toFixed(2).replace('.',',');
+const disc = (de,para) => Math.round((1-para/de)*100);
+const catColor = {
+  'BLOCOS':'#4a6fa5','JOGOS':'#c0392b','FAZ DE CONTA':'#16a085','EDUCATIVOS':'#8e44ad'
+};
+const catIcon = {
+  'BLOCOS':'🧱','JOGOS':'🎲','FAZ DE CONTA':'👨‍🍳','EDUCATIVOS':'📚'
+};
+const catBg = {
+  'BLOCOS':'#e8eef7','JOGOS':'#fce8e8','FAZ DE CONTA':'#e6f7f4','EDUCATIVOS':'#f3e8fb'
+};
+const IMG_BASE = 'https://produtosxalingo.oneweb.com.br/wp-content/uploads/';
+
+function tryImg(slug, cb){
+  // Try to load product image from Xalingo
+  const domains = [`https://produtosxalingo.oneweb.com.br/wp-content/uploads/2024/01/${slug}.png`,
+                   `https://produtosxalingo.oneweb.com.br/wp-content/uploads/2023/01/${slug}.jpg`];
+  return '';
+}
+
+// ======== RENDER ========
+function renderGrid(){
+  const q = document.getElementById('q').value.toLowerCase();
+  const sort = document.getElementById('sort').value;
+
+  let prods = PRODUCTS.filter(p=>{
+    const matchQ = !q || p.nome.toLowerCase().includes(q) || p.ref.includes(q);
+    const matchCat = activeCat==='all' || p.cat===activeCat;
+    let matchPreco = true;
+    if(activePreco==='ate100') matchPreco = p.para<=100;
+    else if(activePreco==='100_200') matchPreco = p.para>100 && p.para<=200;
+    else if(activePreco==='200+') matchPreco = p.para>200;
+    return matchQ && matchCat && matchPreco;
+  });
+
+  if(sort==='az') prods.sort((a,b)=>a.nome.localeCompare(b.nome));
+  else if(sort==='za') prods.sort((a,b)=>b.nome.localeCompare(a.nome));
+  else if(sort==='preco_a') prods.sort((a,b)=>a.para-b.para);
+  else if(sort==='preco_d') prods.sort((a,b)=>b.para-a.para);
+  else if(sort==='desc') prods.sort((a,b)=>disc(b.de,b.para)-disc(a.de,a.para));
+  else prods.sort((a,b)=>a.cat.localeCompare(b.cat)||a.para-b.para);
+
+  const grid = document.getElementById('grid');
+  const isList = activeView==='lst';
+
+  document.getElementById('cnt').textContent = `${prods.length} produto${prods.length!==1?'s':''}`;
+
+  if(!prods.length){
+    grid.innerHTML='<div class="no-results" style="grid-column:1/-1">🔍 Nenhum produto encontrado</div>';
+    return;
+  }
+
+  grid.innerHTML = prods.map(p=>{
+    const inCart = !!cart[p.ref];
+    const pct = disc(p.de,p.para);
+    const color = catColor[p.cat]||'#555';
+    const bg = catBg[p.cat]||'#f5f5f5';
+    const icon = catIcon[p.cat]||'🧸';
+    const estClass = p.est<=200?'est-low':'est-ok';
+    const estTxt = p.est<=200?`⚠️ ${p.est} un`:`✅ ${p.est} un`;
+
+    if(!isList) return `
+    <div class="card ${inCart?'in-cart':''}" style="--cc:${color}"
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
+      <div class="cimg" style="--cimg-bg:${bg}">
+        <span class="cph">${icon}</span>
+      </div>
+      <div class="price-strip" style="--ps-bg:${bg}55">
+        <span class="de">De: ${brl(p.de)}</span>
+        <span class="para">${brl(p.para)}</span>
+        <span class="disc-pill">-${pct}%</span>
+      </div>
+      <div class="cbody">
+        <div class="cref">Ref. ${p.ref}</div>
+        <div class="cname">${p.nome}</div>
+        <div class="cmeta">
+          <span class="cx-badge">📦 Cx: ${p.cx} un</span>
+          <span class="est-badge ${estClass}">${estTxt}</span>
+        </div>
+        <button class="add-btn ${inCart?'added':''}" onclick="event.stopPropagation();addToCart('${p.ref}')">
+          ${inCart?'✅ Adicionado':'➕ Adicionar ao Pedido'}
+        </button>
+      </div>
+    </div>`;
+
+    return `
+    <div class="card ${inCart?'in-cart':''}" style="--cc:${color};flex-direction:row;align-items:center"
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
+      <div class="cimg" style="--cimg-bg:${bg};width:72px;height:72px;aspect-ratio:unset;flex-shrink:0;margin:6px;border-radius:9px">
+        <span class="cph">${icon}</span>
+      </div>
+      <div class="cbody" style="padding:8px 10px;flex:1">
+        <div class="cref">Ref. ${p.ref}</div>
+        <div class="cname" style="-webkit-line-clamp:1;min-height:auto">${p.nome}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap">
+          <span style="font-size:.65rem;color:#aaa;text-decoration:line-through;font-weight:700">${brl(p.de)}</span>
+          <span style="font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--red);font-weight:700">${brl(p.para)}</span>
+          <span class="disc-pill">-${pct}%</span>
+          <span class="cx-badge">📦 ${p.cx} un</span>
+          <span class="est-badge ${estClass}">${estTxt}</span>
+        </div>
+      </div>
+      <button class="lst-add ${inCart?'added':''}" style="margin:0 10px"
+              onclick="event.stopPropagation();addToCart('${p.ref}')" title="Adicionar ao pedido">
+        ${inCart?'✅':'➕'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+// ======== MODAL ========
+function openModal(ref){
+  const p = PRODUCTS.find(x=>x.ref===ref);
+  if(!p) return;
+  currentModal = p;
+
+  const pct = disc(p.de,p.para);
+  const inCart = !!cart[p.ref];
+  const color = catColor[p.cat]||'#555';
+  const bg = catBg[p.cat]||'#f5f5f5';
+  const icon = catIcon[p.cat]||'🧸';
+
+  document.getElementById('mimg').innerHTML = `<span class="cph" style="font-size:5rem;opacity:.18">${icon}</span>`;
+  document.getElementById('mref').textContent = `Ref. ${p.ref}`;
+  document.getElementById('mname').textContent = p.nome;
+  document.getElementById('m-de').textContent = `De: ${brl(p.de)}`;
+  document.getElementById('m-para').textContent = brl(p.para);
+  document.getElementById('m-disc').textContent = `-${pct}% OFF`;
+  document.getElementById('m-cx').textContent = `${p.cx} unidades`;
+  document.getElementById('m-vcx').textContent = brl(p.para*p.cx);
+  document.getElementById('m-est').textContent = `${p.est} unidades`;
+  document.getElementById('m-pct').textContent = `${pct}% de desconto`;
+  document.getElementById('m-link').href = p.link;
+
+  const btn = document.getElementById('m-add-btn');
+  btn.className = `m-add-btn ${inCart?'added':''}`;
+  btn.innerHTML = inCart?'✅ Adicionado ao Pedido':'➕ Adicionar ao Pedido';
+
+  document.getElementById('ficha-grid').innerHTML = `
+    <div class="fi"><div class="filbl">Categoria</div><div class="fival">${p.cat}</div></div>
+    <div class="fi"><div class="filbl">Preço de tabela</div><div class="fival">${brl(p.de)}</div></div>
+    <div class="fi"><div class="filbl">Preço campanha</div><div class="fival" style="color:var(--red)">${brl(p.para)}</div></div>
+    <div class="fi"><div class="filbl">Desconto</div><div class="fival" style="color:var(--red)">${pct}%</div></div>
+    <div class="fi"><div class="filbl">Caixa fechada</div><div class="fival">${p.cx} un</div></div>
+    <div class="fi"><div class="filbl">Valor caixa</div><div class="fival">${brl(p.para*p.cx)}</div></div>
+  `;
+
+  document.getElementById('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function addFromModal(){
+  if(!currentModal) return;
+  addToCart(currentModal.ref);
+  const btn = document.getElementById('m-add-btn');
+  btn.className = 'm-add-btn added';
+  btn.innerHTML = '✅ Adicionado ao Pedido';
+}
+
+document.getElementById('mcls').onclick = closeModal;
+document.getElementById('ov').onclick = e=>{ if(e.target===document.getElementById('ov')) closeModal(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+function closeModal(){
+  document.getElementById('ov').classList.remove('open');
+  document.body.style.overflow='';
+  currentModal=null;
+}
+
+// ======== CART ========
+function addToCart(ref){
+  const p = PRODUCTS.find(x=>x.ref===ref);
+  if(!p) return;
+  if(cart[ref]){
+    cart[ref].qty += p.cx;
+  } else {
+    cart[ref]={p, qty:p.cx};
+  }
+  updateCart();
+  renderGrid();
+}
+
+function removeFromCart(ref){
+  delete cart[ref];
+  updateCart();
+  renderGrid();
+}
+
+function changeQty(ref, delta){
+  if(!cart[ref]) return;
+  const p = cart[ref].p;
+  cart[ref].qty = Math.max(p.cx, cart[ref].qty + delta*p.cx);
+  updateCart();
+}
+
+function setQty(ref, val){
+  if(!cart[ref]) return;
+  const p = cart[ref].p;
+  const q = Math.max(p.cx, Math.round(parseInt(val)||p.cx));
+  cart[ref].qty = q;
+  updateCart();
+}
+
+function clearCart(){
+  if(!Object.keys(cart).length) return;
+  if(!confirm('Limpar todo o pedido?')) return;
+  cart={};
+  updateCart();
+  renderGrid();
+}
+
+function updateCart(){
+  const items = Object.values(cart);
+  const total = items.reduce((s,i)=>s+i.p.para*i.qty,0);
+  const totalQty = items.reduce((s,i)=>s+i.qty,0);
+  const count = items.length;
+
+  // Update badges
+  [document.getElementById('hdr-badge'),document.getElementById('fab-badge')].forEach(el=>el.textContent=count);
+
+  // FAB
+  const fab = document.getElementById('cart-fab');
+  count>0 ? fab.classList.add('show') : fab.classList.remove('show');
+
+  // Totals
+  document.getElementById('tot-itens').textContent = count;
+  document.getElementById('tot-qty').textContent = totalQty;
+  document.getElementById('tot-val').textContent = brl(total);
+
+  // SKU message
+  const skuOk = count>=3;
+  const moneyOk4 = total>=4000;
+  const moneyOk3 = total>=3000;
+  const dot = document.getElementById('sku-dot');
+  const msg = document.getElementById('sku-msg');
+  const campMsg = document.getElementById('cs-camp-met');
+
+  dot.className = 'cs-sku-dot '+(skuOk&&moneyOk3?'ok':'warn');
+  if(skuOk&&moneyOk4) msg.innerHTML = '✅ Pedido qualificado para prazo <strong>OUT/NOV/DEZ</strong>';
+  else if(skuOk&&moneyOk3) msg.innerHTML = '✅ Pedido qualificado para prazo <strong>SET/OUT/NOV</strong>';
+  else if(!skuOk&&!moneyOk3) msg.innerHTML = `${count} SKU${count!==1?'s':''} adicionado${count!==1?'s':''} · mínimo 3 para prazo especial`;
+  else if(!skuOk) msg.innerHTML = `${count} SKU${count!==1?'s':''} adicionado${count!==1?'s':''} · adicione mais ${3-count} SKU${3-count!==1?'s':''}`;
+  else msg.innerHTML = `Total: ${brl(total)} · adicione mais ${brl(3000-total)} para prazo especial`;
+
+  if(skuOk&&moneyOk4) campMsg.innerHTML='<span class="highlight cs-camp-ok">🎉 Prazo OUT/NOV/DEZ ativado!</span>';
+  else if(skuOk&&moneyOk3) campMsg.innerHTML='<span class="highlight cs-camp-ok">🎉 Prazo SET/OUT/NOV ativado! Adicione mais '+brl(4000-total)+' para prazo estendido.</span>';
+  else campMsg.innerHTML='⏳ Adicione ao menos <span class="highlight">3 SKUs</span> e <span class="highlight">R$3.000</span> para ativar o prazo especial.';
+
+  // Cart body
+  const body = document.getElementById('cs-body');
+  if(!items.length){
+    body.innerHTML='<div class="cs-empty"><div class="cs-empty-ico">🛒</div>Nenhum produto adicionado ainda.<br>Clique em "Adicionar ao Pedido" nos produtos.</div>';
+    return;
+  }
+
+  body.innerHTML = items.map(({p,qty})=>{
+    const icon = catIcon[p.cat]||'🧸';
+    return `
+    <div class="cs-item camp">
+      <div class="cs-thumb-empty">${icon}</div>
+      <div class="cs-left">
+        <div class="cs-iref">Ref. ${p.ref}</div>
+        <div class="cs-iname">${p.nome}</div>
+        <div class="cs-iprice">${brl(p.para)}/un · Total: ${brl(p.para*qty)}</div>
+        <div class="cs-imeta">
+          <span class="cs-ibadge">📦 Cx: ${p.cx} un</span>
+          <span class="cs-ibadge camp">🎯 Campanha</span>
+        </div>
+      </div>
+      <div class="cs-right">
+        <div class="cs-qty">
+          <button class="cs-qb" onclick="changeQty('${p.ref}',-1)">−</button>
+          <input class="cs-qi" type="number" value="${qty}" min="${p.cx}" step="${p.cx}"
+                 onchange="setQty('${p.ref}',this.value)">
+          <button class="cs-qb" onclick="changeQty('${p.ref}',1)">+</button>
+        </div>
+        <button class="cs-del" onclick="removeFromCart('${p.ref}')" title="Remover">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCart(){
+  document.getElementById('cart-side').classList.toggle('open');
+  document.getElementById('cart-ov').classList.toggle('open');
+}
+
+function printCart(){
+  const items = Object.values(cart);
+  if(!items.length){ alert('Adicione produtos ao pedido antes de imprimir.'); return; }
+
+  const total = items.reduce((s,i)=>s+i.p.para*i.qty,0);
+  const skuOk = items.length>=3;
+  const moneyOk4 = total>=4000;
+  const moneyOk3 = total>=3000;
+
+  let prazo = 'Sem prazo especial';
+  if(skuOk&&moneyOk4) prazo = '🟢 Qualificado: OUT / NOV / DEZ';
+  else if(skuOk&&moneyOk3) prazo = '🟡 Qualificado: SET / OUT / NOV';
+  else prazo = '🔴 Não qualificado para prazo especial';
+
+  const rows = items.map(({p,qty},i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td>${p.ref}</td>
+      <td>${p.nome}</td>
+      <td>${brl(p.de)}</td>
+      <td><strong>${brl(p.para)}</strong></td>
+      <td>${qty}</td>
+      <td><strong>${brl(p.para*qty)}</strong></td>
+    </tr>`).join('');
+
+  const w = window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>Pedido Campanha Maio 2026 — Xalingo</title>
+  <style>
+    body{font-family:'Nunito',Arial,sans-serif;margin:0;padding:24px;color:#1B3A5C;font-size:12px}
+    h1{font-size:20px;margin-bottom:2px} h2{font-size:13px;font-weight:600;color:#555;margin-bottom:16px}
+    .badge{background:#f0a030;color:#fff;border-radius:100px;padding:3px 12px;font-size:11px;font-weight:700;display:inline-block;margin-bottom:12px}
+    .rules{background:#f0f4f8;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:11px;line-height:1.6}
+    table{width:100%;border-collapse:collapse;margin-bottom:16px}
+    th{background:#1B3A5C;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:700}
+    td{padding:7px 10px;border-bottom:1px solid #eee;font-size:11px}
+    tr:last-child td{border-bottom:none}
+    .total{text-align:right;font-size:14px;font-weight:800}
+    .prazo{border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;margin-bottom:16px;border:1.5px solid #ccc}
+    @media print{.noprint{display:none}}
+  </style></head><body>
+  <div class="badge">🎯 Campanha Especial Maio 2026</div>
+  <h1>Xalingo Brinquedos</h1>
+  <h2>Simulação de Pedido — Campanha Comercial</h2>
+  <div class="rules">
+    <strong>📌 Regras:</strong> Mínimo 3 SKUs participantes · Pedidos acima de R$3.000 → SET/OUT/NOV · Acima de R$4.000 → OUT/NOV/DEZ<br>
+    <strong>Desconto aplicado:</strong> 40% sobre tabela | <strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')}
+  </div>
+  <div class="prazo">${prazo}</div>
+  <table>
+    <thead><tr><th>#</th><th>Ref.</th><th>Produto</th><th>Tabela</th><th>Campanha</th><th>Qtd.</th><th>Total</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div class="total">Total do Pedido: <span style="color:#A01E1E">${brl(total)}</span> · ${items.length} SKUs</div>
+  <div style="margin-top:20px;font-size:10px;color:#aaa">Campanha válida enquanto durarem os estoques. Valores sujeitos a alteração.</div>
+  <script>window.onload=()=>{window.print()}<\/script></body></html>`);
+}
+
+// ======== FILTERS ========
+document.querySelectorAll('[data-cat]').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('[data-cat]').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    activeCat = btn.dataset.cat;
+    activePreco = 'all';
+    document.querySelectorAll('[data-preco]').forEach(b=>b.classList.remove('on'));
+    renderGrid();
+  };
+});
+
+document.querySelectorAll('[data-preco]').forEach(btn=>{
+  btn.onclick=()=>{
+    if(btn.classList.contains('on')){btn.classList.remove('on');activePreco='all';}
+    else{document.querySelectorAll('[data-preco]').forEach(b=>b.classList.remove('on'));btn.classList.add('on');activePreco=btn.dataset.preco;}
+    renderGrid();
+  };
+});
+
+document.getElementById('q').oninput = renderGrid;
+document.getElementById('sort').onchange = renderGrid;
+
+document.getElementById('vg').onclick=()=>{
+  activeView='grid';
+  document.getElementById('grid').className='grid';
+  document.getElementById('vg').classList.add('on');
+  document.getElementById('vl').classList.remove('on');
+  renderGrid();
+};
+document.getElementById('vl').onclick=()=>{
+  activeView='lst';
+  document.getElementById('grid').className='grid lst';
+  document.getElementById('vl').classList.add('on');
+  document.getElementById('vg').classList.remove('on');
+  renderGrid();
+};
+
+// scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('bktop').classList.toggle('show',scrollY>400);
+},{ passive:true });
+
+// ======== SHOW/HIDE ========
+function showCatalog(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('catalog').classList.add('show');
+  renderGrid();
+  updateCart();
+  window.scrollTo(0,0);
+}
+
+function showCover(){
+  document.getElementById('cover').style.display='flex';
+  document.getElementById('catalog').classList.remove('show');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
