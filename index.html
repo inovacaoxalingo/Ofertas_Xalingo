@@ -780,84 +780,91 @@ let activePreco = 'all';
 let activeView = 'grid';
 let currentModal = null;
 
-// ======== IMAGE LOADING (WP REST API + CORS proxies) ========
-const imgCache = {}; // slug -> url|null|'loading'
-const WP = 'https://produtosxalingo.oneweb.com.br';
-const PROXIES = [
-  u => u,
-  u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
-  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u)
-];
+// ======== IMAGE LOADING — igual ao jogos.html ========
+const imgCache = {}; // ref -> url string ('' = sem imagem)
+const WP_API = 'https://produtosxalingo.oneweb.com.br/wp-json/wp/v2';
 
-function proxyFetch(apiUrl, timeout=10000){
-  let i = 0;
-  function next(){
-    if(i >= PROXIES.length) return Promise.reject(new Error('Todos os proxies falharam'));
-    const url = PROXIES[i++](apiUrl);
-    return fetch(url, {signal: AbortSignal.timeout(timeout)})
-      .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-      .catch(err=>{ console.warn('[IMG] proxy '+(i)+' falhou:', err.message); return next(); });
+function _extractImg(html){
+  if(!html) return null;
+  for(const attr of ['src','data-src','data-lazy-src','data-original']){
+    const m = html.match(new RegExp('<img[^>]+'+attr+'=["\']([^"\']*wp-content[^"\']+)["\']','i'));
+    if(m && m[1].startsWith('http')) return m[1];
   }
-  return next();
+  const m2 = html.match(/https?:\/\/[^"'\s<>]+wp-content\/uploads\/[^"'\s<>]+\.(?:jpg|jpeg|png|webp)/i);
+  return m2 ? m2[0] : null;
 }
 
-function fetchImg(slug){
-  if(imgCache[slug] !== undefined) return Promise.resolve(imgCache[slug]);
-  imgCache[slug] = 'loading';
-  const apiUrl = WP+'/wp-json/wp/v2/posts?slug='+encodeURIComponent(slug)+'&_fields=featured_media&_embed&per_page=1';
-  return proxyFetch(apiUrl, 12000)
-    .then(posts=>{
-      if(!posts || !posts.length || !posts[0]._embedded) throw new Error('sem post');
-      const media = posts[0]._embedded['wp:featuredmedia'];
-      if(!media || !media.length) throw new Error('sem imagem');
-      const src = (media[0].media_details && media[0].media_details.sizes &&
-                   media[0].media_details.sizes.medium && media[0].media_details.sizes.medium.source_url)
-                  || media[0].source_url;
-      imgCache[slug] = src || null;
-      return imgCache[slug];
-    })
-    .catch(()=>{ imgCache[slug]=null; return null; });
-}
-
-// Inject image into card after fetch
-function injectCardImg(slug, src){
-  document.querySelectorAll(`.card[data-slug="${slug}"] .cimg`).forEach(el=>{
-    if(!src){ el.querySelector('.cspin')?.remove(); return; }
-    el.innerHTML = `<img src="${src}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`;
+function _tryLoad(src){
+  return new Promise(res=>{
+    const img = new Image();
+    img.onload  = ()=>res(src);
+    img.onerror = ()=>res(null);
+    img.src = src;
   });
-  // also update modal if open
-  if(currentModal && currentModal.slug === slug){
-    const mimg = document.getElementById('mimg');
-    if(src) mimg.innerHTML = `<img src="${src}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
+}
+
+async function resolveImgUrl(slug){
+  try{
+    const res  = await fetch(WP_API+'/posts?slug='+slug+'&_embed=1&_fields=id,content,_links,_embedded', {signal:AbortSignal.timeout(8000)});
+    const data = await res.json();
+    const post = data[0];
+    if(!post) return '';
+    const featMedia = post?._embedded?.['wp:featuredmedia']?.[0];
+    const feat = featMedia?.media_details?.sizes?.thumbnail?.source_url
+              || featMedia?.media_details?.sizes?.medium?.source_url
+              || featMedia?.source_url;
+    if(feat && await _tryLoad(feat)) return feat;
+    const fromContent = _extractImg(post?.content?.rendered||'');
+    if(fromContent && await _tryLoad(fromContent)) return fromContent;
+    const mRes   = await fetch(WP_API+'/media?parent='+post.id+'&per_page=4&_fields=source_url,media_details', {signal:AbortSignal.timeout(8000)});
+    const medias = await mRes.json();
+    for(const m of medias){
+      const src = m?.media_details?.sizes?.thumbnail?.source_url
+               || m?.media_details?.sizes?.medium?.source_url
+               || m?.source_url;
+      if(src && await _tryLoad(src)) return src;
+    }
+  }catch(e){ /* silencioso */ }
+  return '';
+}
+
+// Injetar imagem no card e no modal
+function injectImg(ref, src){
+  document.querySelectorAll(`.card[data-ref="${ref}"] .cimg`).forEach(el=>{
+    el.querySelector('.cspin')?.remove();
+    if(src) el.innerHTML = `<img src="${src}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`;
+  });
+  if(currentModal && currentModal.ref===ref && src){
+    document.getElementById('mimg').innerHTML = `<img src="${src}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
   }
 }
 
-function loadImgForSlug(slug){
-  if(!slug) return;
-  if(imgCache[slug] && imgCache[slug] !== 'loading'){ injectCardImg(slug, imgCache[slug]); return; }
-  if(imgCache[slug] === 'loading') return;
-  fetchImg(slug).then(src=>injectCardImg(slug, src));
+// Carregar imagem por ref (slug extraído do link)
+async function loadImgForRef(ref){
+  if(ref in imgCache){ if(imgCache[ref]) injectImg(ref, imgCache[ref]); return; }
+  imgCache[ref] = ''; // marca como em curso
+  const p = PRODUCTS.find(x=>x.ref===ref);
+  if(!p || !p.slug) return;
+  const url = await resolveImgUrl(p.slug);
+  imgCache[ref] = url;
+  injectImg(ref, url);
 }
 
-// IntersectionObserver for lazy image loading
+// IntersectionObserver — só busca quando o card entra na tela
 let imgObserver = null;
 function setupImgObserver(){
   if(imgObserver) imgObserver.disconnect();
   imgObserver = new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting) return;
-      const card = entry.target;
-      const slug = card.dataset.slug;
-      if(slug) loadImgForSlug(slug);
-      imgObserver.unobserve(card);
+      const ref = entry.target.dataset.ref;
+      if(ref){ loadImgForRef(ref); imgObserver.unobserve(entry.target); }
     });
-  }, {rootMargin:'200px'});
-  document.querySelectorAll('.card[data-slug]').forEach(card=>{
-    if(imgCache[card.dataset.slug] && imgCache[card.dataset.slug]!=='loading'){
-      injectCardImg(card.dataset.slug, imgCache[card.dataset.slug]);
-    } else {
-      imgObserver.observe(card);
-    }
+  },{rootMargin:'300px'});
+  document.querySelectorAll('.card[data-ref]').forEach(card=>{
+    const ref = card.dataset.ref;
+    if(ref in imgCache && imgCache[ref]){ injectImg(ref,imgCache[ref]); }
+    else imgObserver.observe(card);
   });
 }
 
@@ -873,14 +880,8 @@ const catIcon = {
 const catBg = {
   'BLOCOS':'#e8eef7','JOGOS':'#fce8e8','FAZ DE CONTA':'#e6f7f4','EDUCATIVOS':'#f3e8fb'
 };
-const IMG_BASE = 'https://produtosxalingo.oneweb.com.br/wp-content/uploads/';
 
-function tryImg(slug, cb){
-  // Try to load product image from Xalingo
-  const domains = [`https://produtosxalingo.oneweb.com.br/wp-content/uploads/2024/01/${slug}.png`,
-                   `https://produtosxalingo.oneweb.com.br/wp-content/uploads/2023/01/${slug}.jpg`];
-  return '';
-}
+
 
 // ======== RENDER ========
 function renderGrid(){
@@ -923,14 +924,14 @@ function renderGrid(){
     const estClass = p.est<=200?'est-low':'est-ok';
     const estTxt = p.est<=200?`⚠️ ${p.est} un`:`✅ ${p.est} un`;
 
-    const cachedImg = imgCache[p.slug];
-    const imgHtml = (cachedImg && cachedImg!=='loading')
+    const cachedImg = imgCache[p.ref];
+    const imgHtml = (cachedImg)
       ? `<img src="${cachedImg}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`
       : `<div class="cspin"></div>`;
 
     if(!isList) return `
     <div class="card ${inCart?'in-cart':''}" style="--cc:${color}"
-         onclick="openModal('${p.ref}')" data-ref="${p.ref}" data-slug="${p.slug}">
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
       <div class="cimg" style="--cimg-bg:${bg}">
         ${imgHtml}
       </div>
@@ -952,14 +953,14 @@ function renderGrid(){
       </div>
     </div>`;
 
-    const cachedImgL = imgCache[p.slug];
-    const imgHtmlL = (cachedImgL && cachedImgL!=='loading')
+    const cachedImgL = imgCache[p.ref];
+    const imgHtmlL = (cachedImgL)
       ? `<img src="${cachedImgL}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:9px">`
       : `<div class="cspin"></div>`;
 
     return `
     <div class="card ${inCart?'in-cart':''}" style="--cc:${color};flex-direction:row;align-items:center"
-         onclick="openModal('${p.ref}')" data-ref="${p.ref}" data-slug="${p.slug}">
+         onclick="openModal('${p.ref}')" data-ref="${p.ref}">
       <div class="cimg" style="--cimg-bg:${bg};width:72px;height:72px;aspect-ratio:unset;flex-shrink:0;margin:6px;border-radius:9px">
         ${imgHtmlL}
       </div>
@@ -995,12 +996,12 @@ function openModal(ref){
   const icon = catIcon[p.cat]||'🧸';
 
   // Image in modal
-  const cachedM = imgCache[p.slug];
-  if(cachedM && cachedM!=='loading'){
+  const cachedM = imgCache[p.ref];
+  if(cachedM){
     document.getElementById('mimg').innerHTML = `<img src="${cachedM}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
   } else {
     document.getElementById('mimg').innerHTML = `<div class="cspin"></div>`;
-    if(!cachedM) fetchImg(p.slug).then(src=>injectCardImg(p.slug, src));
+    loadImgForRef(p.ref); // will inject via injectImg when ready
   }
   document.getElementById('mref').textContent = `Ref. ${p.ref}`;
   document.getElementById('mname').textContent = p.nome;
