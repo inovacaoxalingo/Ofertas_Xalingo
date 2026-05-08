@@ -253,6 +253,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--navy);-web
 .cs-qi:focus{outline:none;border-color:var(--navy)}
 .cs-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:.78rem;padding:2px;transition:color .15s}
 .cs-del:hover{color:var(--red)}
+.cs-del-link{background:none;border:none;color:var(--red);cursor:pointer;font-size:.68rem;font-weight:800;font-family:'Nunito',sans-serif;padding:4px 0 0;text-decoration:underline;opacity:.7;transition:opacity .15s;display:block}
+.cs-del-link:hover{opacity:1}
 
 .cs-footer{border-top:1px solid var(--bdr);padding:14px 16px;flex-shrink:0;background:#fafafa}
 .cs-totals{margin-bottom:12px}
@@ -645,14 +647,26 @@ async function resolveImgUrl(slug){
   return '';
 }
 
-// Injetar imagem no card e no modal
+// Injetar imagem no card, modal e carrinho
 function injectImg(ref, src){
+  // Cards
   document.querySelectorAll(`.card[data-ref="${ref}"] .cimg`).forEach(el=>{
     el.querySelector('.cspin')?.remove();
     if(src) el.innerHTML = `<img src="${src}" alt="" loading="lazy" style="width:84%;height:84%;object-fit:contain;transition:transform .3s">`;
   });
+  // Modal
   if(currentModal && currentModal.ref===ref && src){
     document.getElementById('mimg').innerHTML = `<img src="${src}" alt="" style="max-width:90%;max-height:250px;object-fit:contain">`;
+  }
+  // Carrinho — substitui thumb vazio pela imagem real
+  if(src){
+    document.querySelectorAll(`.cs-item[data-ref="${ref}"] .cs-thumb-empty`).forEach(el=>{
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.className = 'cs-item-thumb';
+      el.replaceWith(img);
+    });
   }
 }
 
@@ -971,6 +985,7 @@ function updateCart(){
           <span class="cs-ibadge">📦 Cx: ${p.cx} un</span>
           <span class="cs-ibadge camp">🎯 Campanha</span>
         </div>
+        <button class="cs-del-link" data-action="del" data-ref="${p.ref}">Remover</button>
       </div>
       <div class="cs-right">
         <div class="cs-qty">
@@ -978,7 +993,6 @@ function updateCart(){
           <input class="cs-qi" type="number" value="${qty}" min="${p.cx}" step="${p.cx}" data-ref="${p.ref}">
           <button class="cs-qb" data-action="plus" data-ref="${p.ref}">+</button>
         </div>
-        <button class="cs-del" data-action="del" data-ref="${p.ref}" title="Remover">🗑</button>
       </div>
     </div>`;
   }).join('');
